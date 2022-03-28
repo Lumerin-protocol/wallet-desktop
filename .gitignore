@@ -1,0 +1,43 @@
+# dependencies
+/node_modules
+
+# environment variables
+.env
+.env.*
+
+# building
+/build
+/dist
+entitlements.mac.plist
+appveyor.yml
+.travis.yml
+.nvmrc
+.husky
+
+
+# testing
+/coverage
+
+# misc
+.vscode
+.DS_Store
+
+# logs
+npm-debug.log*
+
+# deb building
+ppa/app/debian/debhelper-build-stamp
+ppa/app/debian/files
+ppa/app/debian/lumerin-wallet-desktop.debhelper.log
+ppa/app/debian/lumerin-wallet-desktop.substvars
+ppa/app/debian/lumerin-wallet-desktop/
+ppa/app/opt/
+ppa/app/usr/
+ppa/lumerin-wallet-desktop*
+
+# ESLint
+.eslintcache
+
+# Certificates
+*.p12
+
