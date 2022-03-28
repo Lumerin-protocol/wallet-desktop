@@ -7,7 +7,6 @@
 [![Build Status](https://travis-ci.com/TitanInd/lumerin-wallet-desktop.svg?branch=master)](https://travis-ci.com/TitanInd/lumerin-wallet-desktop)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-![Lumerin Desktop Wallet](https://lumerin.io/images/lumerin-apps-demo@2x.png)
 
 ## Development
 
