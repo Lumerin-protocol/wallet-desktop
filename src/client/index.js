@@ -37,14 +37,17 @@ const createClient = function(createStore) {
     );
   });
 
+  const onTransactionLinkClick = txHash =>
+    window.openLink('https://etherscan.io/tx/' + txHash);
+
   const onTermsLinkClick = () =>
     window.openLink(
-      'https://github.com/TitanInd/lumerin-wallet-desktop/blob/develop/LICENSE'
+      'https://github.com/Lumerin-protocol/lumerin-overview/blob/main/docs/00-overview.md'
     );
 
   const onHelpLinkClick = () =>
     window.openLink(
-      'https://github.com/TitanInd/documentation/blob/master/FAQ.md#lumerin-faq'
+      'https://github.com/Lumerin-protocol/lumerin-overview/blob/main/docs/00-overview.md'
     );
 
   const onLinkClick = url => window.openLink(url);
@@ -73,18 +76,10 @@ const createClient = function(createStore) {
   };
 
   const forwardedMethods = {
-    getConvertCoinGasLimit: utils.forwardToMainProcess(
-      'get-convert-coin-gas-limit'
-    ),
-    getConvertLmrGasLimit: utils.forwardToMainProcess(
-      'get-convert-lmr-gas-limit'
-    ),
-    getConvertCoinEstimate: utils.forwardToMainProcess(
-      'get-convert-coin-estimate'
-    ),
-    getConvertLmrEstimate: utils.forwardToMainProcess(
-      'get-convert-lmr-estimate'
-    ),
+    // refreshAllSockets: utils.forwardToMainProcess(
+    //   'refresh-all-sockets',
+    //   120000
+    // ),
     refreshAllTransactions: utils.forwardToMainProcess(
       'refresh-all-transactions',
       120000
@@ -93,24 +88,21 @@ const createClient = function(createStore) {
       'refresh-transaction',
       120000
     ),
+    refreshActiveContracts: utils.forwardToMainProcess(
+      'refresh-active-contracts',
+      120000
+    ),
     onOnboardingCompleted: utils.forwardToMainProcess('onboarding-completed'),
     recoverFromMnemonic: utils.forwardToMainProcess('recover-from-mnemonic'),
-    getImportGasLimit: utils.forwardToMainProcess('get-import-gas-limit'),
-    getExportGasLimit: utils.forwardToMainProcess('get-export-gas-limit'),
-    getTokensGasLimit: utils.forwardToMainProcess('get-tokens-gas-limit'),
-    portLumerin: utils.forwardToMainProcess('port-lumerin', 750000),
+    getTokenGasLimit: utils.forwardToMainProcess('get-token-gas-limit'),
     validatePassword: utils.forwardToMainProcess('validate-password'),
-    buyLumerin: utils.forwardToMainProcess('buy-lumerin', 750000),
-    convertCoin: utils.forwardToMainProcess('convert-coin', 750000),
-    retryImport: utils.forwardToMainProcess('retry-import', 750000),
-    convertLmr: utils.forwardToMainProcess('convert-lmr', 750000),
     changePassword: utils.forwardToMainProcess('change-password'),
     onLoginSubmit: utils.forwardToMainProcess('login-submit'),
-    getPortFees: utils.forwardToMainProcess('get-port-fees'),
+    createContract: utils.forwardToMainProcess('create-contract'),
     getGasLimit: utils.forwardToMainProcess('get-gas-limit'),
     getGasPrice: utils.forwardToMainProcess('get-gas-price'),
-    sendCoin: utils.forwardToMainProcess('send-coin', 750000),
     sendLmr: utils.forwardToMainProcess('send-lmr', 750000),
+    sendEth: utils.forwardToMainProcess('send-eth', 750000),
     clearCache: utils.forwardToMainProcess('clear-cache')
   };
 
@@ -120,6 +112,7 @@ const createClient = function(createStore) {
     isValidMnemonic: keys.isValidMnemonic,
     createMnemonic: keys.createMnemonic,
     onTermsLinkClick,
+    onTransactionLinkClick,
     getStringEntropy,
     copyToClipboard,
     onHelpLinkClick,

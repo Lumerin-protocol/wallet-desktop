@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+package-lock.json
 
 # environment variables
 .env
@@ -8,6 +9,7 @@
 # building
 /build
 /dist
+/dist.zip
 entitlements.mac.plist
 appveyor.yml
 .travis.yml
@@ -21,6 +23,9 @@ appveyor.yml
 # misc
 .vscode
 .DS_Store
+.vscode
+vscode
+.idea
 
 # logs
 npm-debug.log*

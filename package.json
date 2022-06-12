@@ -1,20 +1,23 @@
 {
   "name": "lumerin-wallet-desktop",
-  "version": "0.1.0",
+  "version": "1.0.1-beta",
   "author": {
     "name": "Kodee McIntosh",
-    "email": "kodee@titan.io",
-    "url": "https://titan.io"
+    "email": "kodee@lumerin.io",
+    "url": "https://lumerin.io"
   },
   "description": "Lumerin Wallet for desktop devices",
-  "repository": "TitanInd/lumerin-wallet-desktop",
+  "repository": "https://gitlab.com/TitanInd/proxy/wallet-desktop",
   "license": "MIT",
   "homepage": "./",
   "main": "public/electron.js",
-  "copyright": "Copyright © 2021 Titan Industries",
+  "copyright": "Copyright © 2022 Titan Industries",
   "scripts": {
+    "init": "npm run dev:setup && npm run dev:link",
+    "dev:setup": "./scripts/dev_setup.sh",
+    "dev:link": "./scripts/dev_link_repos.sh",
     "debug": "concurrently \"BROWSER=none react-scripts start\" \"wait-on $npm_package_config_cra_dev_serv && ELECTRON_START_URL=$npm_package_config_cra_dev_serv electron . --inspect\"",
-    "dev": "concurrently \"BROWSER=none react-scripts start\" \"wait-on $npm_package_config_cra_dev_serv && ELECTRON_START_URL=$npm_package_config_cra_dev_serv electron .\"",
+    "dev": "concurrently \"BROWSER=none react-scripts start\" \"wait-on $npm_package_config_cra_dev_serv &&  PROXY_ROUTER_BASE_URL=localhost:8080 DEBUG=true ELECTRON_START_URL=$npm_package_config_cra_dev_serv electron . \" \"npm run clear-electron-cache\"",
     "dist": "react-scripts build && electron-builder --c.extraMetadata.main=build/electron.js",
     "env": "run-script-os",
     "env:win32": ".\\scripts\\env.bat",
@@ -26,8 +29,9 @@
   },
   "dependencies": {
     "@electron/remote": "1.2.0",
-    "@headlessui/react": "1.4.1",
-    "@heroicons/react": "1.0.4",
+    "@lumerin/contracts": "1.0.7-beta",
+    "@lumerin/wallet-core": "1.0.6-beta",
+    "@lumerin/wallet-ui-logic": "1.0.12-beta",
     "@reach/menu-button": "0.1.7",
     "bignumber.js": "7.2.1",
     "bip39": "2.5.0",
@@ -47,7 +51,6 @@
     "fast-password-entropy": "1.1.1",
     "json-stringify-safe": "5.0.1",
     "lodash": "4.17.21",
-    "metronome-contracts": "2.5.0",
     "nedb": "1.8.0",
     "p-timeout": "4.1.0",
     "patch-package": "5.1.1",
@@ -59,19 +62,17 @@
     "react-hint": "3.2.1",
     "react-modal": "3.5.1",
     "react-motion": "0.5.2",
-    "react-redux": "5.0.7",
+    "react-redux": "7.2.6",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
     "react-scripts": "4.0.3",
     "react-virtualized": "9.20.1",
-    "redux": "3.7.2",
     "smart-round": "1.0.0",
     "styled-components": "4.1.2",
     "universal-analytics": "0.4.20",
     "web3-utils": "1.3.6"
   },
   "devDependencies": {
-    "autoprefixer": "10.3.4",
     "concurrently": "6.2.0",
     "electron": "13.1.4",
     "electron-builder": "22.11.7",
@@ -98,7 +99,7 @@
     "wait-on": "6.0.0"
   },
   "build": {
-    "appId": "io.titan.lumerin.wallet.desktop",
+    "appId": "io.lumerin.wallet.desktop",
     "productName": "Lumerin Wallet",
     "files": [
       ".env",
@@ -111,11 +112,10 @@
     "directories": {
       "buildResources": "assets"
     },
-    "afterSign": "scripts/notarize.js",
     "mac": {
       "artifactName": "${name}_v${version}.${ext}",
       "category": "public.app-category.finance",
-      "icon": "./assets/icon.icns",
+      "icon": "./assets/lumerin_light.ico",
       "extendInfo": {
         "NSUserNotificationAlertStyle": "alert"
       },
@@ -126,7 +126,6 @@
       "entitlementsInherit": "./entitlements.mac.plist"
     },
     "dmg": {
-      "backgroundColor": "#FFFFFF",
       "contents": [
         {
           "x": 110,
@@ -146,12 +145,12 @@
       "target": [
         "deb"
       ],
-      "icon": "./assets/icon.png"
+      "icon": "./assets/lumerin.ico"
     },
     "win": {
       "artifactName": "${name}_v${version}.${ext}",
       "target": "nsis",
-      "icon": "./assets/icon",
+      "icon": "./assets/lumerin.ico",
       "legalTrademarks": ""
     }
   },

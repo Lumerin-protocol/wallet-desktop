@@ -6,7 +6,7 @@ import { ReceiveForm } from './ReceiveForm';
 import { ConfirmForm } from './ConfirmForm';
 import { SuccessForm } from './SuccessForm';
 
-import withTransactionModalState from 'lumerin-wallet-ui-logic/src/hocs/withTransactionModalState';
+import withTransactionModalState from '@lumerin/wallet-ui-logic/src/hocs/withTransactionModalState';
 import QRCode from 'qrcode.react';
 
 import CopyIcon from '../../icons/CopyIcon';
@@ -40,10 +40,6 @@ const Body = styled.div`
   height: 500px;
   border-radius: 5px;
   padding: 2rem 3rem 2rem 3rem;
-
-  @media (min-height: 700px) {
-    padding: 6.4rem 1.6rem;
-  }
 `;
 
 function TransactionModal(props) {
@@ -52,6 +48,8 @@ function TransactionModal(props) {
   const [destinationAddress, setDestinationAddress] = useState('');
 
   const handlePropagation = e => e.stopPropagation();
+
+  const onSetDestinationAddress = e => setDestinationAddress(e.targetValue);
 
   if (!props.activeTab) {
     return <></>;
@@ -65,7 +63,7 @@ function TransactionModal(props) {
         {props.activeTab === 'send' && (
           <SendForm
             destinationAddress={destinationAddress}
-            onDestinationAddressInput={setDestinationAddress}
+            onDestinationAddressInput={onSetDestinationAddress}
             amountInput={amount}
             onAmountInput={setAmount}
             lmrBalanceUSD={props.lmrBalanceUSD}
@@ -73,8 +71,17 @@ function TransactionModal(props) {
           />
         )}
         {props.activeTab === 'receive' && <ReceiveForm {...props} />}
-        {props.activeTab === 'confirm' && <ConfirmForm {...props} />}
-        {props.activeTab === 'success' && <SuccessForm {...props} />}
+        {props.activeTab === 'confirm' && (
+          <ConfirmForm
+            destinationAddress={destinationAddress}
+            onDestinationAddressInput={onSetDestinationAddress}
+            amountInput={amount}
+            {...props}
+          />
+        )}
+        {props.activeTab === 'success' && (
+          <SuccessForm amountInput={amount} {...props} />
+        )}
       </Body>
     </Modal>
   );
